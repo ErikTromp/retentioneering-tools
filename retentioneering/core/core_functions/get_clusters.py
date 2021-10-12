@@ -19,6 +19,7 @@ def get_clusters(self, *,
                  refit_cluster=True,
                  targets=None,
                  export_segments=None,
+                 custom_features=None,
                  **kwargs):
     """
     Cluster users in the dataset according to their behavior.
@@ -65,7 +66,9 @@ def get_clusters(self, *,
     event_col = self.retention_config['event_col']
 
     # obtain vectorized features
-    if hasattr(self, 'datatype') and self.datatype == 'features':
+    if custom_features != None:
+        features = custom_features
+    elif hasattr(self, 'datatype') and self.datatype == 'features':
         features = self._obj.copy()
     else:
         features = self.extract_features(feature_type=feature_type,
