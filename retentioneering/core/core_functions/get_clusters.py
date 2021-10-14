@@ -75,6 +75,8 @@ def get_clusters(self, *,
 
     # Remove features that occur infrequently
     features = features.loc[:, features.astype(bool).sum(axis=0) >= min_feature_count]
+    print(str(len(features)))
+    print(str(len(custom_features)))
     # Add custom features back in
     if type(custom_features) != 'str':
         features = features.join(custom_features)
