@@ -75,8 +75,6 @@ def get_clusters(self, *,
 
     # Remove features that occur infrequently
     features = features.loc[:, features.astype(bool).sum(axis=0) >= min_feature_count]
-    print(str(len(features)))
-    print(str(len(custom_features)))
     # Add custom features back in
     if type(custom_features) != 'str':
         features = features.join(custom_features)
@@ -92,7 +90,6 @@ def get_clusters(self, *,
     # init and obtain bool vector for targets:
     targets_bool = [np.array([False] * len(self.clusters))]
     target_names = [' ']
-    print(targets)
 
     if targets is not None:
         targets_bool = []

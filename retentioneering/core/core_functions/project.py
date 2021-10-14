@@ -15,6 +15,8 @@ def project(self, *,
             ngram_range=(1,1),
             feature_type='tfidf',
             plot_type=None,
+            min_feature_count=0,
+            custom_features='',
             **kwargs):
     """
     Does dimention reduction of user trajectories and draws projection plane.
@@ -78,6 +80,12 @@ def project(self, *,
 
     features = self.extract_features(feature_type=feature_type,
                                      ngram_range=ngram_range)
+    
+    # Remove features that occur infrequently
+    features = features.loc[:, features.astype(bool).sum(axis=0) >= min_feature_count]
+    # Add custom features back in
+    if type(custom_features) != 'str':
+        features = features.join(custom_features)
 
     if method == 'tsne':
         self._projection = _learn_tsne(features, **kwargs)
